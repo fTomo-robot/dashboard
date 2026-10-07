@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新習志野ダッシュボード</title>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
   <style>
     /* 横置きモニター（16:9）スクロールなし全画面フィット ── 約1920×1080想定 */
     :root {
@@ -360,6 +361,13 @@
       html.portrait .main-right { display: contents; }
     html.portrait #busCard { order: -1; width: 100%; }
     html.portrait #weatherCard, html.portrait #forecastCard { display: none; }
+
+    /* ── Lucide アイコン ── */
+    .lucide { width: 1.15em; height: 1.15em; stroke-width: 2; vertical-align: -0.2em; flex-shrink: 0; }
+    .card-title .lucide, .refresh-btn .lucide { margin-right: 4px; }
+    .weather-icon, .forecast-day .day-icon { color: var(--accent); }
+    .weather-icon .lucide, .forecast-day .day-icon .lucide { width: 1em; height: 1em; stroke-width: 1.6; margin: 0; vertical-align: middle; }
+    .weather-meta .lucide { width: 1em; height: 1em; }
   </style>
 </head>
 <body>
@@ -376,7 +384,7 @@
   <div class="header-right">
     <div class="date-display" id="dateDisplay">読み込み中...</div>
     <div id="lastUpdated">-</div>
-    <button class="refresh-btn" onclick="refresh()">🔄 更新</button>
+    <button class="refresh-btn" onclick="refresh()"><i data-lucide="refresh-cw"></i> 更新</button>
   </div>
 </div>
 
@@ -385,7 +393,7 @@
   <!-- 左：電車 -->
   <div class="main-left">
     <div class="card" id="trainCard">
-      <div class="card-title">🚃 次の電車 — 参考時刻</div>
+      <div class="card-title"><i data-lucide="train-front"></i> 次の電車 — 参考時刻</div>
       <div class="loading">時刻を計算中...</div>
     </div>
   </div>
@@ -394,19 +402,19 @@
   <div class="main-right">
     <!-- バス -->
     <div class="card" id="busCard">
-      <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）</div>
+      <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）</div>
       <div class="loading">時刻を計算中...</div>
     </div>
 
     <!-- 天気 -->
     <div class="card" id="weatherCard">
-      <div class="card-title">☁ 現在の天気 — 新習志野</div>
+      <div class="card-title"><i data-lucide="cloud"></i> 現在の天気 — 新習志野</div>
       <div class="loading">天気情報を取得中...</div>
     </div>
 
     <!-- 週間予報 -->
     <div class="card" id="forecastCard">
-      <div class="card-title">📅 週間天気予報</div>
+      <div class="card-title"><i data-lucide="calendar-days"></i> 週間天気予報</div>
       <div class="loading">予報を取得中...</div>
     </div>
   </div>
@@ -460,19 +468,20 @@ updateClock();
 const LAT = 35.6533, LON = 140.0258;
 
 const WMO_MAP = {
-  0: ['☀️','快晴'],
-  1: ['🌤️','おおむね晴れ'], 2: ['⛅','一部曇り'], 3: ['☁️','曇り'],
-  45: ['🌫️','霧'], 48: ['🌫️','霧氷'],
-  51: ['🌦️','霧雨（弱）'], 53: ['🌦️','霧雨'], 55: ['🌧️','霧雨（強）'],
-  61: ['🌧️','小雨'], 63: ['🌧️','雨'], 65: ['🌧️','大雨'],
-  71: ['🌨️','小雪'], 73: ['🌨️','雪'], 75: ['❄️','大雪'],
-  77: ['🌨️','霧雪'],
-  80: ['🌦️','にわか雨（弱）'], 81: ['🌦️','にわか雨'], 82: ['⛈️','強いにわか雨'],
-  95: ['⛈️','雷雨'], 96: ['⛈️','雷雨（霰）'], 99: ['⛈️','激しい雷雨'],
+  0: ['sun','快晴'],
+  1: ['cloud-sun','おおむね晴れ'], 2: ['cloud-sun','一部曇り'], 3: ['cloud','曇り'],
+  45: ['cloud-fog','霧'], 48: ['cloud-fog','霧氷'],
+  51: ['cloud-drizzle','霧雨（弱）'], 53: ['cloud-drizzle','霧雨'], 55: ['cloud-rain','霧雨（強）'],
+  61: ['cloud-rain','小雨'], 63: ['cloud-rain','雨'], 65: ['cloud-rain','大雨'],
+  71: ['cloud-snow','小雪'], 73: ['cloud-snow','雪'], 75: ['snowflake','大雪'],
+  77: ['cloud-snow','霧雪'],
+  80: ['cloud-drizzle','にわか雨（弱）'], 81: ['cloud-drizzle','にわか雨'], 82: ['cloud-lightning','強いにわか雨'],
+  95: ['cloud-lightning','雷雨'], 96: ['cloud-lightning','雷雨（霰）'], 99: ['cloud-lightning','激しい雷雨'],
 };
 
 function wmoInfo(code) {
-  return WMO_MAP[code] || ['🌡️','不明'];
+  const [n, d] = WMO_MAP[code] || ['thermometer','不明'];
+  return [`<i data-lucide="${n}"></i>`, d];
 }
 
 async function fetchWeather() {
@@ -495,7 +504,7 @@ async function fetchWeather() {
 
     // 現在天気
     document.getElementById('weatherCard').innerHTML = `
-      <div class="card-title">☁ 現在の天気 — 新習志野</div>
+      <div class="card-title"><i data-lucide="cloud"></i> 現在の天気 — 新習志野</div>
       <div class="weather-now">
         <div style="flex:1;display:flex;align-items:center;gap:12px">
           <div class="weather-icon">${icon}</div>
@@ -515,10 +524,10 @@ async function fetchWeather() {
         </div>
       </div>
       <div class="weather-meta">
-        <span>💧 湿度 ${c.relativehumidity_2m}%</span>
-        <span>💨 風速 ${c.windspeed_10m} m/s</span>
-        <span>🌧 降水 ${c.precipitation} mm</span>
-        <span>⬆ ${Math.round(d.temperature_2m_max[0])} ⬇ ${Math.round(d.temperature_2m_min[0])}</span>
+        <span><i data-lucide="droplets"></i> 湿度 ${c.relativehumidity_2m}%</span>
+        <span><i data-lucide="wind"></i> 風速 ${c.windspeed_10m} m/s</span>
+        <span><i data-lucide="cloud-rain"></i> 降水 ${c.precipitation} mm</span>
+        <span><i data-lucide="arrow-up"></i>${Math.round(d.temperature_2m_max[0])} <i data-lucide="arrow-down"></i>${Math.round(d.temperature_2m_min[0])}</span>
       </div>
     `;
 
@@ -539,12 +548,12 @@ async function fetchWeather() {
     }).join('');
 
     document.getElementById('forecastCard').innerHTML = `
-      <div class="card-title">📅 週間天気予報</div>
+      <div class="card-title"><i data-lucide="calendar-days"></i> 週間天気予報</div>
       <div class="forecast-grid">${forecastHTML}</div>
     `;
   } catch(e) {
     document.getElementById('weatherCard').innerHTML =
-      `<div class="card-title">☁ 天気</div><div class="loading">取得できませんでした</div>`;
+      `<div class="card-title"><i data-lucide="cloud"></i> 天気</div><div class="loading">取得できませんでした</div>`;
   }
 }
 
@@ -761,7 +770,7 @@ function renderTrains() {
   }
 
   document.getElementById('trainCard').innerHTML = `
-    <div class="card-title">🚃 次の電車 — ${dayType}（JR東日本公式時刻表）</div>
+    <div class="card-title"><i data-lucide="train-front"></i> 次の電車 — ${dayType}（JR東日本公式時刻表）</div>
     <div class="train-cols">
       <div class="train-col">
         <div class="train-direction" style="flex-shrink:0">
@@ -1007,7 +1016,7 @@ function renderBus() {
 
   if (ctx.closed) {
     document.getElementById('busCard').innerHTML = `
-      <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）</div>
+      <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）</div>
       <div style="color:var(--muted);font-size:14px;padding:6px 0">本日は運休です</div>
       <div class="note">${ctx.label}</div>
     `;
@@ -1015,7 +1024,7 @@ function renderBus() {
   }
   if (ctx.unknown) {
     document.getElementById('busCard').innerHTML = `
-      <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）</div>
+      <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）</div>
       <div style="color:var(--muted);font-size:14px;padding:6px 0">運行情報が確認できません</div>
       <div class="note">${ctx.label}</div>
     `;
@@ -1023,8 +1032,8 @@ function renderBus() {
   }
   if (ctx.needsUpdate) {
     document.getElementById('busCard').innerHTML = `
-      <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）</div>
-      <div style="color:var(--accent2);font-size:16px;padding:6px 0;font-weight:700">⚠ バスダイヤを更新してください</div>
+      <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）</div>
+      <div style="color:var(--accent2);font-size:16px;padding:6px 0;font-weight:700"><i data-lucide="triangle-alert"></i> バスダイヤを更新してください</div>
       <div class="note">9/16までのダイヤしか登録されていません</div>
     `;
     return;
@@ -1032,7 +1041,7 @@ function renderBus() {
 
   if (buses.length === 0) {
     document.getElementById('busCard').innerHTML = `
-      <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）— ${ctx.label}</div>
+      <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）— ${ctx.label}</div>
       <div style="color:var(--muted);font-size:14px;padding:6px 0">本日の運行は終了しました</div>
       <div class="note">${ctx.label}</div>
     `;
@@ -1052,7 +1061,7 @@ function renderBus() {
   }).join('');
 
   document.getElementById('busCard').innerHTML = `
-    <div class="card-title">🚌 大学バス（新習志野発 → 津田沼行）— ${ctx.label}</div>
+    <div class="card-title"><i data-lucide="bus"></i> 大学バス（新習志野発 → 津田沼行）— ${ctx.label}</div>
     <div class="train-list">${rows}</div>
     <div class="note">${ctx.label} · ※茜浜経由便は別途運行あり</div>
   `;
@@ -1101,6 +1110,19 @@ function refresh() {
 }
 
 refresh();
+</script>
+<script>
+// Lucide: 動的に描画された <i data-lucide> を随時SVGに置換
+(function () {
+  let t = null;
+  function run() {
+    if (typeof lucide === 'undefined') return;
+    if (document.querySelector('i[data-lucide]')) lucide.createIcons();
+  }
+  new MutationObserver(() => { clearTimeout(t); t = setTimeout(run, 0); })
+    .observe(document.body, { childList: true, subtree: true });
+  run();
+})();
 </script>
 </body>
 </html>
