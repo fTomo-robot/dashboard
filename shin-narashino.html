@@ -354,11 +354,17 @@
     html.portrait #stage { width: 1100px; height: auto; transform: none; }
     html.portrait .main { flex-direction: column; flex: none; }
     html.portrait .main-left, html.portrait .main-right { flex: none; width: 100%; }
-    html.portrait #trainCard { flex: none; height: 860px; }
-    html.portrait #trainCard .train-time, html.portrait #busCard .train-time { font-size: 60px; }
+    html.portrait #trainCard { flex: none; height: auto; overflow: visible; }
+    html.portrait .train-body, html.portrait .train-cols, html.portrait .train-line-list,
+    html.portrait .train-items-wrap, html.portrait .paired-row { flex: none; }
+    html.portrait .train-item { flex: none; }
+    html.portrait .train-items-wrap .train-item { flex: none; }
+    html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 46px; letter-spacing: 0; }
+    html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 20px; padding: 4px 8px; }
     html.portrait #forecastCard { flex: none; }
     html.portrait .clock { font-size: 72px; }
-      html.portrait .main-right { display: contents; }
+    html.portrait .main-right { display: contents; }
     html.portrait #busCard { order: -1; width: 100%; }
     html.portrait #weatherCard, html.portrait #forecastCard { display: none; }
 
