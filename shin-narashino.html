@@ -354,14 +354,15 @@
     html.portrait #stage { width: 1100px; height: auto; transform: none; }
     html.portrait .main { flex-direction: column; flex: none; }
     html.portrait .main-left, html.portrait .main-right { flex: none; width: 100%; }
-    html.portrait #trainCard { flex: none; height: auto; overflow: visible; }
+    html.portrait #trainCard { flex: none; width: 100%; height: auto; overflow: visible; }
     html.portrait .train-body, html.portrait .train-cols, html.portrait .train-line-list,
     html.portrait .train-items-wrap, html.portrait .paired-row { flex: none; }
     html.portrait .train-item { flex: none; }
     html.portrait .train-items-wrap .train-item { flex: none; }
     html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
-      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 46px; letter-spacing: 0; }
-    html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 20px; padding: 4px 8px; }
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 40px; letter-spacing: 0; white-space: nowrap; }
+    html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 18px; padding: 3px 6px; }
+    html.portrait #trainCard .train-item { gap: 6px; padding-left: 6px; padding-right: 6px; }
     html.portrait #forecastCard { flex: none; }
     html.portrait .clock { font-size: 72px; }
     html.portrait .main-right { display: contents; }
