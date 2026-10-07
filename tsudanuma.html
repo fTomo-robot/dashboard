@@ -418,10 +418,21 @@
     html.portrait .main-right { width: 100%; }
     html.portrait #trainCard { flex: 1 1 auto; width: 100%; height: auto; overflow: visible; }
     html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
-      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 43px; letter-spacing: 0; white-space: nowrap; }
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 54px; letter-spacing: 0; white-space: nowrap; }
     html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 21px; padding: 3px 8px; }
     html.portrait #trainCard .dest-badge { font-size: 17px; }
-    html.portrait #trainCard .train-item { gap: 6px; padding-left: 6px; padding-right: 6px; }
+    /* 津田沼: 3列が狭いので、バッジ｜時刻（その下にカウントダウン）の2段構成にする */
+    html.portrait #trainCard .train-item {
+      display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
+      align-items: center; column-gap: 8px; row-gap: 4px; padding-left: 6px; padding-right: 6px; }
+    html.portrait #trainCard .train-item > :first-child { grid-column: 1; grid-row: 1 / span 2; }
+    html.portrait #trainCard .train-item .train-time { grid-column: 2; grid-row: 1; align-self: end; }
+    html.portrait #trainCard .train-item .train-countdown { grid-column: 2; grid-row: 2; justify-self: start; align-self: start; width: auto; font-size: 22px; padding: 3px 12px; }
+    html.portrait #trainCard .train-item .badge-wrap, html.portrait #trainCard .train-item .dest-badge { width: auto; min-width: 0; }
+    html.portrait #trainCard .train-item .dest-badge { font-size: 20px; padding: 5px 8px; }
+    html.portrait #trainCard .direction-badge { font-size: 17px; padding: 4px 8px; }
+    html.portrait #trainCard .subnote { font-size: 14px; }
+    html.portrait #busCard .train-countdown { width: auto; }
     html.portrait #busCard .train-time { font-size: 68px; }
     html.portrait #busCard .train-countdown { font-size: 28px; padding: 5px 12px; }
     html.portrait #busCard .dest-badge { font-size: 22px; width: auto; min-width: 0; padding-left: 10px; padding-right: 10px; }
