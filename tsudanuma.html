@@ -412,26 +412,26 @@
     /* ── 縦画面（スマホ）: 幅1100pxで縦に積み、画面幅に合わせてzoom。縦スクロール ── */
     html.portrait, html.portrait body { height: auto; }
     html.portrait body { overflow-y: auto; overflow-x: hidden; display: block; min-height: 100vh; }
-    html.portrait #stage { width: 1100px; height: auto; min-height: var(--vh, 0px); transform: none; }
+    html.portrait #stage { width: 1300px; height: auto; min-height: var(--vh, 0px); transform: none; }
     html.portrait .main { flex-direction: column; flex: 1 1 auto; }
     html.portrait .main-left { flex: 1 1 auto; width: 100%; }
     html.portrait .main-right { width: 100%; }
     html.portrait #trainCard { flex: 1 1 auto; width: 100%; height: auto; overflow: visible; }
     html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
-      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 54px; letter-spacing: 0; white-space: nowrap; }
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 52px; letter-spacing: 0; white-space: nowrap; }
     html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 21px; padding: 3px 8px; }
     html.portrait #trainCard .dest-badge { font-size: 17px; }
-    /* 津田沼: 3列が狭いので、バッジ｜時刻（その下にカウントダウン）の2段構成にする */
-    html.portrait #trainCard .train-item {
-      display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
-      align-items: center; column-gap: 8px; row-gap: 4px; padding-left: 6px; padding-right: 6px; }
-    html.portrait #trainCard .train-item > :first-child { grid-column: 1; grid-row: 1 / span 2; }
-    html.portrait #trainCard .train-item .train-time { grid-column: 2; grid-row: 1; align-self: end; }
-    html.portrait #trainCard .train-item .train-countdown { grid-column: 2; grid-row: 2; justify-self: start; align-self: start; width: auto; font-size: 22px; padding: 3px 12px; }
-    html.portrait #trainCard .train-item .badge-wrap, html.portrait #trainCard .train-item .dest-badge { width: auto; min-width: 0; }
-    html.portrait #trainCard .train-item .dest-badge { font-size: 20px; padding: 5px 8px; }
-    html.portrait #trainCard .direction-badge { font-size: 17px; padding: 4px 8px; }
-    html.portrait #trainCard .subnote { font-size: 14px; }
+    /* 津田沼: 3列を横に並べるため表示幅を広げ、すべて1行（改行なし）にする */
+    html.portrait #trainCard .train-item { display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; padding-left: 6px; padding-right: 6px; }
+    html.portrait #trainCard .train-item, html.portrait #trainCard .train-item * { white-space: nowrap; }
+    html.portrait #trainCard .train-item .badge-wrap { flex-direction: row; width: auto; gap: 4px; flex-shrink: 0; }
+    html.portrait #trainCard .train-item .badge-wrap .dest-badge { width: auto; }
+    html.portrait #trainCard .train-item .dest-badge { width: auto; min-width: 0; font-size: 18px; padding: 4px 7px; flex-shrink: 0; }
+    html.portrait #trainCard .train-item .seat-tag { display: inline-block; width: auto; font-size: 15px; padding: 4px 6px; flex-shrink: 0; }
+    html.portrait #trainCard .train-item .train-time { flex: 1; min-width: 0; }
+    html.portrait #trainCard .train-item .train-countdown { width: auto; flex-shrink: 0; font-size: 20px; padding: 3px 8px; }
+    html.portrait #trainCard .direction-badge { font-size: 17px; padding: 4px 8px; white-space: nowrap; }
+    html.portrait #trainCard .subnote { font-size: 13px; white-space: nowrap; }
     html.portrait #busCard .train-countdown { width: auto; }
     html.portrait #busCard .train-time { font-size: 68px; }
     html.portrait #busCard .train-countdown { font-size: 28px; padding: 5px 12px; }
@@ -516,7 +516,7 @@ function fitStage() {
   document.documentElement.classList.toggle('portrait', portrait);
   if (portrait) {
     stage.style.transform = '';
-    const z = window.innerWidth / 1100;
+    const z = window.innerWidth / 1300;
     stage.style.zoom = z;
     stage.style.setProperty('--vh', (window.innerHeight / z) + 'px');
   } else {
