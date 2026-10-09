@@ -453,10 +453,12 @@
     html.portrait #busCard .dest-badge { font-size: 26px; width: auto; min-width: 0; padding-left: 10px; padding-right: 10px; }
     html.portrait #busCard .badge-wrap { width: auto; }
     html.portrait #busCard .train-item { padding-top: 10px; padding-bottom: 10px; gap: 12px; }
-    /* 津田沼: 快速は全幅の行、各停＋武蔵野線はその下で2列 */
+    /* 津田沼: 各停＋武蔵野線を2列で上、快速は全幅の行で下 */
     html.portrait .train-body { flex-direction: column; gap: 16px; }
     html.portrait .train-line-col, html.portrait .train-paired-col { flex: 1 1 auto; width: 100%; }
     html.portrait .train-line-head { min-height: 0; }
+    html.portrait .train-line-col { order: 2; } /* 快速（あまり使わない）は各停・武蔵野線の下 */
+    html.portrait .train-paired-col { order: 1; }
     html.portrait .train-header-row { min-height: 0; }
 
     /* ── Lucide アイコン ── */
