@@ -418,20 +418,20 @@
     html.portrait .main-right { width: 100%; }
     html.portrait #trainCard { flex: 1 1 auto; width: 100%; height: auto; overflow: visible; }
     html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
-      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 52px; letter-spacing: 0; white-space: nowrap; }
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 47px; letter-spacing: 0; white-space: nowrap; }
     html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 21px; padding: 3px 8px; }
     html.portrait #trainCard .dest-badge { font-size: 17px; }
     /* 津田沼: 3列を横に並べるため表示幅を広げ、すべて1行（改行なし）にする */
     html.portrait #trainCard .train-item { display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; padding-left: 6px; padding-right: 6px; }
     html.portrait #trainCard .train-item, html.portrait #trainCard .train-item * { white-space: nowrap; }
     /* バッジ枠を固定幅にして、全行で時刻・カウントダウンの位置をそろえる */
-    html.portrait #trainCard .train-item .dest-badge { box-sizing: border-box; width: 90px; min-width: 0; font-size: 18px; padding: 4px 2px; text-align: center; flex-shrink: 0; }
-    html.portrait #trainCard .train-item > .dest-badge { margin-right: 48px; } /* 始発付き(44+4+90)と同じ幅 */
-    html.portrait #trainCard .train-item .badge-wrap { flex-direction: row; width: 138px; gap: 4px; flex-shrink: 0; }
-    html.portrait #trainCard .train-item .badge-wrap .dest-badge { width: 90px; margin-right: 0; }
+    html.portrait #trainCard .train-item .dest-badge { box-sizing: border-box; width: 86px; min-width: 0; font-size: 17px; padding: 4px 2px; text-align: center; flex-shrink: 0; }
+    html.portrait #trainCard .train-item > .dest-badge { margin-right: 48px; } /* 始発付き(44+4+86)と同じ幅 */
+    html.portrait #trainCard .train-item .badge-wrap { flex-direction: row; width: 134px; gap: 4px; flex-shrink: 0; }
+    html.portrait #trainCard .train-item .badge-wrap .dest-badge { width: 86px; margin-right: 0; }
     html.portrait #trainCard .train-item .seat-tag { display: block; box-sizing: border-box; width: 44px; font-size: 15px; padding: 4px 0; flex-shrink: 0; }
     html.portrait #trainCard .train-item .train-time { flex: 1; min-width: 0; }
-    html.portrait #trainCard .train-item .train-countdown { box-sizing: border-box; width: 66px; text-align: center; flex-shrink: 0; font-size: 20px; padding: 3px 0; }
+    html.portrait #trainCard .train-item .train-countdown { box-sizing: border-box; width: 60px; text-align: center; flex-shrink: 0; font-size: 19px; padding: 3px 0; }
     html.portrait #trainCard .direction-badge { font-size: 17px; padding: 4px 8px; white-space: nowrap; }
     html.portrait #trainCard .subnote { font-size: 13px; white-space: nowrap; }
     html.portrait #busCard .train-countdown { width: auto; }
@@ -453,6 +453,18 @@
     .weather-icon, .forecast-day .day-icon { color: var(--accent); }
     .weather-icon .lucide, .forecast-day .day-icon .lucide { width: 1em; height: 1em; stroke-width: 1.6; margin: 0; vertical-align: middle; }
     .weather-meta .lucide { width: 1em; height: 1em; }
+
+    /* ── 駅の切り替え（ヘッダー左） ── */
+    .station-switch { display: inline-flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit; }
+    .station-switch .cur { font-size: 20px; color: var(--muted); letter-spacing: 2px; font-weight: 600; }
+    .station-switch .to {
+      display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+      font-size: 15px; font-weight: 700; color: var(--accent);
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 5px 10px; box-shadow: var(--shadow); white-space: nowrap;
+    }
+    html.portrait .station-switch .cur { font-size: 22px; }
+    html.portrait .station-switch .to { font-size: 20px; padding: 6px 12px; }
   </style>
 </head>
 <body>
@@ -461,7 +473,7 @@
 <!-- ── Header ── -->
 <div class="header">
   <div>
-    <div class="station-label">津田沼駅</div>
+    <a class="station-switch" href="shin-narashino.html"><span class="cur">津田沼駅</span><span class="to"><i data-lucide="arrow-left-right"></i> 新習志野へ</span></a>
   </div>
   <div class="clock-area">
     <div class="clock" id="clock">--:--:--</div>
@@ -1327,6 +1339,9 @@ function refresh() {
 }
 
 refresh();
+</script>
+<script>
+try { localStorage.setItem('station', 'tsudanuma'); } catch (e) {}
 </script>
 <script>
 // Lucide: 動的に描画された <i data-lucide> を随時SVGに置換
