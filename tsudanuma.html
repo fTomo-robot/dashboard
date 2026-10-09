@@ -38,6 +38,7 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     html, body { height: 100%; }
 
     body {
@@ -409,43 +410,54 @@
     .train-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
     .note { font-size: 12px; color: var(--muted); padding: 5px 10px; background: var(--card2); border-radius: 6px; border: 1px solid var(--border); }
 
-    /* ── 縦画面（スマホ）: 幅1100pxで縦に積み、画面幅に合わせてzoom。縦スクロール ── */
+    /* ── 縦画面（スマホ）: 幅1100pxで縦に積み、画面幅に合わせてzoom。縦スクロール ──
+       iOSの文字自動拡大は止め、縮小表示（約0.35倍）でも読めるよう文字サイズを明示する */
     html.portrait, html.portrait body { height: auto; }
     html.portrait body { overflow-y: auto; overflow-x: hidden; display: block; min-height: 100vh; }
-    html.portrait #stage { width: 1300px; height: auto; min-height: var(--vh, 0px); transform: none; }
+    html.portrait #stage { width: 1100px; height: auto; min-height: var(--vh, 0px); transform: none; }
     html.portrait .main { flex-direction: column; flex: 1 1 auto; }
     html.portrait .main-left { flex: 1 1 auto; width: 100%; }
-    html.portrait .main-right { width: 100%; }
-    html.portrait #trainCard { flex: 1 1 auto; width: 100%; height: auto; overflow: visible; }
-    html.portrait #trainCard .train-time, html.portrait #busCard .train-time {
-      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; font-size: 47px; letter-spacing: 0; white-space: nowrap; }
-    html.portrait #trainCard .train-countdown, html.portrait #busCard .train-countdown { font-size: 21px; padding: 3px 8px; }
-    html.portrait #trainCard .dest-badge { font-size: 17px; }
-    /* 津田沼: 3列を横に並べるため表示幅を広げ、すべて1行（改行なし）にする */
-    html.portrait #trainCard .train-item { display: flex; align-items: center; flex-wrap: nowrap; gap: 6px; padding-left: 6px; padding-right: 6px; }
-    html.portrait #trainCard .train-item, html.portrait #trainCard .train-item * { white-space: nowrap; }
-    /* バッジ枠を固定幅にして、全行で時刻・カウントダウンの位置をそろえる */
-    html.portrait #trainCard .train-item .dest-badge { box-sizing: border-box; width: 86px; min-width: 0; font-size: 17px; padding: 4px 2px; text-align: center; flex-shrink: 0; }
-    html.portrait #trainCard .train-item > .dest-badge { margin-right: 48px; } /* 始発付き(44+4+86)と同じ幅 */
-    html.portrait #trainCard .train-item .badge-wrap { flex-direction: row; width: 134px; gap: 4px; flex-shrink: 0; }
-    html.portrait #trainCard .train-item .badge-wrap .dest-badge { width: 86px; margin-right: 0; }
-    html.portrait #trainCard .train-item .seat-tag { display: block; box-sizing: border-box; width: 44px; font-size: 15px; padding: 4px 0; flex-shrink: 0; }
-    html.portrait #trainCard .train-item .train-time { flex: 1; min-width: 0; }
-    html.portrait #trainCard .train-item .train-countdown { box-sizing: border-box; width: 60px; text-align: center; flex-shrink: 0; font-size: 19px; padding: 3px 0; }
-    html.portrait #trainCard .direction-badge { font-size: 17px; padding: 4px 8px; white-space: nowrap; }
-    html.portrait #trainCard .subnote { font-size: 13px; white-space: nowrap; }
-    html.portrait #busCard .train-countdown { width: auto; }
-    html.portrait #busCard .train-time { font-size: 68px; }
-    html.portrait #busCard .train-countdown { font-size: 28px; padding: 5px 12px; }
-    html.portrait #busCard .dest-badge { font-size: 22px; width: auto; min-width: 0; padding-left: 10px; padding-right: 10px; }
-    html.portrait #busCard .badge-wrap { width: auto; }
-    html.portrait #busCard .train-item { padding-top: 10px; padding-bottom: 10px; gap: 12px; }
-    html.portrait #busCard .card-title { font-size: 20px; }
-    html.portrait #forecastCard { flex: none; }
-    html.portrait .clock { font-size: 72px; }
     html.portrait .main-right { display: contents; }
     html.portrait #busCard { order: -1; width: 100%; }
     html.portrait #weatherCard, html.portrait #forecastCard { display: none; }
+    html.portrait #trainCard { flex: 1 1 auto; width: 100%; height: auto; overflow: visible; }
+    /* ヘッダー */
+    html.portrait .clock { font-size: 80px; }
+    html.portrait .date-display { font-size: 26px; }
+    html.portrait .header-right { font-size: 24px; }
+    html.portrait .refresh-btn { font-size: 24px; padding: 8px 16px; }
+    html.portrait .station-switch .cur { font-size: 32px; }
+    html.portrait .station-switch .to { font-size: 26px; padding: 6px 14px; }
+    /* カード共通 */
+    html.portrait .card-title { font-size: 30px; margin-bottom: 12px; }
+    html.portrait .direction-badge { font-size: 28px; padding: 6px 12px; white-space: nowrap; }
+    html.portrait .subnote { font-size: 24px; white-space: nowrap; }
+    html.portrait .note, html.portrait .loading { font-size: 26px; }
+    html.portrait .service-status { font-size: 24px; }
+    html.portrait .ext-link { font-size: 22px !important; padding: 4px 10px !important; }
+    html.portrait #busCard [style*="font-size"] { font-size: 26px !important; }
+    /* 行（電車・バス共通）：バッジ枠を固定幅にして時刻・カウントダウンの位置をそろえる */
+    html.portrait .train-item { flex-wrap: nowrap; gap: 8px; padding-left: 8px; padding-right: 8px; }
+    html.portrait .train-item, html.portrait .train-item * { white-space: nowrap; }
+    html.portrait #trainCard .train-item .dest-badge { box-sizing: border-box; min-width: 0; font-size: 26px; padding: 4px 2px; text-align: center; }
+    html.portrait #trainCard .train-item .badge-wrap .dest-badge { width: 100%; }
+    html.portrait #trainCard .train-item > .dest-badge, html.portrait #trainCard .train-item .badge-wrap { width: 112px; flex-shrink: 0; }
+    html.portrait #trainCard .train-item .seat-tag { font-size: 22px; padding: 3px 0; }
+    html.portrait .train-time {
+      font-family: ui-monospace, 'SF Mono', Menlo, 'Courier New', monospace; letter-spacing: 0; }
+    html.portrait #trainCard .train-item .train-time { flex: 1; min-width: 0; font-size: 58px; }
+    html.portrait #trainCard .train-item .train-countdown { width: auto; flex-shrink: 0; font-size: 28px; padding: 3px 10px; }
+    /* バス */
+    html.portrait #busCard .train-time { font-size: 68px; }
+    html.portrait #busCard .train-countdown { width: auto; font-size: 30px; padding: 5px 14px; }
+    html.portrait #busCard .dest-badge { font-size: 26px; width: auto; min-width: 0; padding-left: 10px; padding-right: 10px; }
+    html.portrait #busCard .badge-wrap { width: auto; }
+    html.portrait #busCard .train-item { padding-top: 10px; padding-bottom: 10px; gap: 12px; }
+    /* 津田沼: 快速は全幅の行、各停＋武蔵野線はその下で2列 */
+    html.portrait .train-body { flex-direction: column; gap: 16px; }
+    html.portrait .train-line-col, html.portrait .train-paired-col { flex: 1 1 auto; width: 100%; }
+    html.portrait .train-line-head { min-height: 0; }
+    html.portrait .train-header-row { min-height: 0; }
 
     /* ── Lucide アイコン ── */
     .lucide { width: 1.15em; height: 1.15em; stroke-width: 2; vertical-align: -0.2em; flex-shrink: 0; }
@@ -463,8 +475,6 @@
       background: var(--card); border: 1px solid var(--border); border-radius: 8px;
       padding: 5px 10px; box-shadow: var(--shadow); white-space: nowrap;
     }
-    html.portrait .station-switch .cur { font-size: 22px; }
-    html.portrait .station-switch .to { font-size: 20px; padding: 6px 12px; }
   </style>
 </head>
 <body>
@@ -530,7 +540,7 @@ function fitStage() {
   document.documentElement.classList.toggle('portrait', portrait);
   if (portrait) {
     stage.style.transform = '';
-    const z = window.innerWidth / 1300;
+    const z = window.innerWidth / 1100;
     stage.style.zoom = z;
     stage.style.setProperty('--vh', (window.innerHeight / z) + 'px');
   } else {
